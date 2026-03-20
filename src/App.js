@@ -1,6 +1,13 @@
 import { useState } from 'react';
 import initialData from './data.json'; // Ton fichier JSON fourni
+import dataImporte from './data.json';
 
+// Ensuite, dans ta fonction loadBackup :
+const loadBackup = () => {
+    setTasks(dataImporte.tasks);
+    setFolders(dataImporte.dossiers);
+    setRelations(dataImporte.relations);
+};
 function App() {
   const [tasks, setTasks] = useState([]);
   const [folders, setFolders] = useState([]);
@@ -36,7 +43,8 @@ function App() {
 
   return (
     <div className="App">
-      {/* Tes composants ici */}
+      <h1>Bienvenue dans l'application de gestion de tâches</h1>
     </div>
   );
 }
+export default App;
