@@ -14,7 +14,7 @@ Une application de gestion de tâches (ToDo-List) développée en **React**, per
 - **Édition dynamique** : Modification du titre, de la description, de la date d'échéance et du statut (Enums) directement dans l'interface.
 - **Validation stricte** : Titre (min. 5 caractères) et Date d'échéance obligatoires lors de la création.
 
-### 📁 Gestion des Dossiers
+### 📁 Gestion des Dossiers(pas fini)
 - **Vue dédiée** : Basculement entre la liste des tâches et la bibliothèque de dossiers.
 - **Relations** : Liaison dynamique entre les tâches et les dossiers (n dossiers par tâche).
 - **Indicateurs** : Affichage du nombre de tâches actives par dossier.
