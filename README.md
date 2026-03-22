@@ -1,12 +1,12 @@
-# 📝 ToDo-List Project
+# ToDo-List Project
 
 Une application de gestion de tâches (ToDo-List) développée en **React**, permettant de gérer des missions complexes avec des dossiers associés, des équipiers et un système de suivi d'états.
 
 ---
 
-## 🚀 Fonctionnalités principales
+##  Fonctionnalités principales
 
-### 📋 Gestion des Tâches
+###  Gestion des Tâches
 - **Chargement automatique** : Initialisation via un backup `data.json` (Tâches, Dossiers, Relations).
 - **Mode Simple vs Complet** : 
   - *Simple* : Vue épurée avec titre, échéance et 2 dossiers maximum.
@@ -14,7 +14,7 @@ Une application de gestion de tâches (ToDo-List) développée en **React**, per
 - **Édition dynamique** : Modification du titre, de la description, de la date d'échéance et du statut (Enums) directement dans l'interface.
 - **Validation stricte** : Titre (min. 5 caractères) et Date d'échéance obligatoires lors de la création.
 
-### 📁 Gestion des Dossiers(pas fini)
+###  Gestion des Dossiers(pas fini)
 - **Vue dédiée** : Basculement entre la liste des tâches et la bibliothèque de dossiers.
 - **Relations** : Liaison dynamique entre les tâches et les dossiers (n dossiers par tâche).
 - **Indicateurs** : Affichage du nombre de tâches actives par dossier.
@@ -25,7 +25,7 @@ Une application de gestion de tâches (ToDo-List) développée en **React**, per
 
 ---
 
-## 🛠 Architecture du Projet
+##  Architecture du Projet
 
 Le projet suit une structure modulaire où chaque composant possède son propre dossier avec son fichier JS et son CSS dédié :
 
