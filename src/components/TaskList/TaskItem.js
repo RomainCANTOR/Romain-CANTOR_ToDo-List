@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './TaskItem.css';
-import { ETATS } from '../../constants/enums'; // On importe la liste des statuts
+import { ETATS } from '../../constants/enums'; 
 
 const TaskItem = ({ task, taskFolders, onUpdateTask }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -36,7 +36,7 @@ const TaskItem = ({ task, taskFolders, onUpdateTask }) => {
           <span className="due-date"> {task.date_echeance}</span>
         </div>
 
-        {/* Affichage du badge de statut actuel */}
+        
         {!isEditing && (
           <span className={`status-tag ${task.etat.replace(' ', '-')}`}>
             {task.etat}
@@ -48,7 +48,7 @@ const TaskItem = ({ task, taskFolders, onUpdateTask }) => {
         <div className="task-body-complete">
           <hr />
           <div className="edit-fields">
-            {/* GESTION DU STATUT EN MODE ÉDITION */}
+            
             <div className="field-group">
               <label>Statut :</label>
               {isEditing ? (

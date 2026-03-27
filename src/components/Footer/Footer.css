@@ -1,25 +1,40 @@
 .footer {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #f8f9fa;
+    padding: 15px;
+    border-top: 1px solid #dee2e6;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
 }
 
-.add-btn {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: #28a745;
-    color: white;
-    font-size: 30px;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+.add-actions {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 20px;
+}
+
+.btn-add {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
     transition: transform 0.2s;
 }
 
-.add-btn:hover {
-    transform: scale(1.1);
+.btn-add:hover {
+    transform: scale(1.05);
+}
+
+.btn-add.task {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-add.folder {
+    background-color: #6c757d;
+    color: white;
 }

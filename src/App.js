@@ -7,17 +7,20 @@ import Filters from './components/Filters/Filters';
 import Footer from './components/Footer/Footer';
 import TaskModal from './components/Modal/TaskModal';
 import { ETAT_TERMINE } from './constants/enums';
+import FolderModal from './components/Modal/FolderModal'; // Import bien utilisé maintenant
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [folders, setFolders] = useState([]);
   const [relations, setRelations] = useState([]);
   const [isInitialized, setIsInitialized] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   
-  // États pour le Tri et le Filtre
+  // États pour les Modals
+  const [showModal, setShowModal] = useState(false);
+  const [isFolderOpen, setIsFolderOpen] = useState(false); // État utilisé en bas
+  
   const [sortBy, setSortBy] = useState('date_echeance');
-  const [filterStatus, setFilterStatus] = useState('EN_COURS'); // Filtre par défaut
+  const [filterStatus, setFilterStatus] = useState('EN_COURS');
 
   const loadBackup = () => {
     setTasks(dataImporte.tasks);
@@ -31,26 +34,26 @@ function App() {
     setShowModal(false);
   };
 
-  
+  const handleSaveFolder = (newFolder) => {
+    const folderWithId = { ...newFolder, id: Date.now() };
+    setFolders([...folders, folderWithId]);
+    setIsFolderOpen(false); // Ferme la modal après sauvegarde
+  };
+
+  const updateTask = (updatedTask) => {
+    setTasks(tasks.map(t => t.id === updatedTask.id ? updatedTask : t));
+  };
+
   const getProcessedTasks = () => {
     let result = [...tasks];
-
-    
     if (filterStatus === 'EN_COURS') {
       result = result.filter(t => !ETAT_TERMINE.includes(t.etat));
     }
-
-    
     result.sort((a, b) => {
       if (sortBy === 'title') return a.title.localeCompare(b.title);
       return new Date(b[sortBy]) - new Date(a[sortBy]);
     });
-
     return result;
-  };
-
-  const updateTask = (updatedTask) => {
-  setTasks(tasks.map(t => t.id === updatedTask.id ? updatedTask : t));
   };
 
   if (!isInitialized) {
@@ -83,12 +86,24 @@ function App() {
         />
       </main>
 
-      <Footer onOpenModal={() => setShowModal(true)} />
+      {/* BRANCHEMENT DU FOOTER : On lie les boutons aux états */}
+      <Footer 
+        onOpenTaskModal={() => setShowModal(true)} 
+        onOpenFolderModal={() => setIsFolderOpen(true)} 
+      />
 
+      {/* AFFICHAGE DES MODALS */}
       {showModal && (
         <TaskModal 
           onClose={() => setShowModal(false)} 
           onSave={handleAddTask}
+        />
+      )}
+
+      {isFolderOpen && (
+        <FolderModal 
+          onClose={() => setIsFolderOpen(false)} 
+          onSave={handleSaveFolder}
         />
       )}
     </div>

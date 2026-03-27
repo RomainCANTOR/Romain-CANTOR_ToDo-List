@@ -3,25 +3,25 @@ import './TaskModal.css';
 import { ETATS, LISTE_EQUIPIERS } from '../../constants/enums';
 
 const TaskModal = ({ onClose, onSave }) => {
-    // État initial conforme à ton objet "Tâche"
+    
     const [formData, setFormData] = useState({
         title: '',
         description: '',
         date_echeance: '',
         etat: ETATS.NOUVEAU,
-        equipiers: [] // Stockera des objets { name: "..." }
+        equipiers: [] 
     });
 
-    // Gestion de la sélection multiple des équipiers
+    
     const handleEquipierToggle = (nom) => {
         const estDejaSelectionne = formData.equipiers.some(e => e.name === nom);
         
         let nouveauxEquipiers;
         if (estDejaSelectionne) {
-            // On le retire
+            
             nouveauxEquipiers = formData.equipiers.filter(e => e.name !== nom);
         } else {
-            // On l'ajoute sous forme d'objet comme dans le JSON
+            
             nouveauxEquipiers = [...formData.equipiers, { name: nom }];
         }
         
@@ -31,7 +31,7 @@ const TaskModal = ({ onClose, onSave }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // --- VALIDATIONS CONSIGNES ---
+        
         if (formData.title.trim().length < 5) {
             alert("L'intitulé doit contenir au moins 5 caractères.");
             return;
@@ -41,7 +41,7 @@ const TaskModal = ({ onClose, onSave }) => {
             return;
         }
 
-        // Si tout est OK, on sauvegarde
+        
         onSave(formData);
     };
 
@@ -51,7 +51,7 @@ const TaskModal = ({ onClose, onSave }) => {
                 <h2>Nouvelle Tâche</h2>
                 
                 <form onSubmit={handleSubmit}>
-                    {/* CHAMP TITRE */}
+                    
                     <div className="form-group">
                         <label>Intitulé (min. 5 caractères) :</label>
                         <input 
@@ -63,7 +63,7 @@ const TaskModal = ({ onClose, onSave }) => {
                         />
                     </div>
 
-                    {/* CHAMP DESCRIPTION */}
+                    
                     <div className="form-group">
                         <label>Description :</label>
                         <textarea 
@@ -73,7 +73,7 @@ const TaskModal = ({ onClose, onSave }) => {
                         />
                     </div>
 
-                    {/* CHAMP DATE ÉCHÉANCE */}
+                    
                     <div className="form-group">
                         <label>Date d'échéance :</label>
                         <input 
@@ -84,7 +84,7 @@ const TaskModal = ({ onClose, onSave }) => {
                         />
                     </div>
 
-                    {/* SÉLECTION DES ÉQUIPIERS (Cases à cocher) */}
+                    
                     <div className="form-group">
                         <label>Équipiers effectuant la tâche :</label>
                         <div className="equipiers-selector">
@@ -101,7 +101,7 @@ const TaskModal = ({ onClose, onSave }) => {
                         </div>
                     </div>
 
-                    {/* BOUTONS D'ACTION */}
+                    
                     <div className="modal-buttons">
                         <button type="button" className="btn-cancel" onClick={onClose}>
                             Annuler

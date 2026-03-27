@@ -1,6 +1,6 @@
 import React from 'react';
 import './Header.css';
-// On remonte de deux niveaux : Header -> components -> src -> constants
+
 import { ETAT_TERMINE } from '../../constants/enums';
 const Header = ({ tasks }) => {
     const total = tasks.length;
