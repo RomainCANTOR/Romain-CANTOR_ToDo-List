@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import './TaskItem.css';
 import { ETATS } from '../../constants/enums'; 
 
-const TaskItem = ({ task, taskFolders, onUpdateTask }) => {
+const TaskItem = ({ task, allFolders, relations, onToggleFolder, onUpdateTask }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedTask, setEditedTask] = useState({ ...task });
+
+  // --- LOGIQUE : Filtrer les dossiers liés à cette tâche ---
+  const linkedFolders = allFolders.filter(f => 
+    relations.some(r => r.tache === task.id && r.dossier === f.id)
+  );
 
   const handleSave = () => {
     if (editedTask.title.length < 5) {
@@ -18,37 +23,58 @@ const TaskItem = ({ task, taskFolders, onUpdateTask }) => {
 
   return (
     <div className={`task-card ${isExpanded ? 'expanded' : ''}`}>
+      {/* --- ENTÊTE (MODE SIMPLE) --- */}
       <div className="task-header-row">
         <span className="toggle-arrow" onClick={() => setIsExpanded(!isExpanded)}>
           {isExpanded ? '▼' : '▶'}
         </span>
         
         <div className="task-main-info">
-          {isEditing ? (
-            <input 
-              type="text" 
-              value={editedTask.title} 
-              onChange={(e) => setEditedTask({...editedTask, title: e.target.value})}
-            />
-          ) : (
-            <h3>{task.title}</h3>
-          )}
-          <span className="due-date"> {task.date_echeance}</span>
+          <div className="task-title-row">
+            {isEditing ? (
+              <input 
+                type="text" 
+                className="edit-input-title"
+                value={editedTask.title} 
+                onChange={(e) => setEditedTask({...editedTask, title: e.target.value})}
+              />
+            ) : (
+              <h3>{task.title}</h3>
+            )}
+
+            {/* BADGES DES DOSSIERS (Visibles même quand c'est fermé) */}
+            {!isEditing && (
+              <div className="task-mini-folders">
+                {linkedFolders.map(f => (
+                  <span 
+                    key={f.id} 
+                    className="mini-folder-badge" 
+                    style={{ "--folder-color": f.color }}
+                  >
+                    {f.title}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+          
+          <span className="due-date">📅 {task.date_echeance}</span>
         </div>
 
-        
         {!isEditing && (
-          <span className={`status-tag ${task.etat.replace(' ', '-')}`}>
+          <span className={`status-tag ${task.etat.replace(/\s+/g, '-')}`}>
             {task.etat}
           </span>
         )}
       </div>
 
+      {/* --- DÉTAILS (MODE COMPLET / ÉTENDU) --- */}
       {isExpanded && (
         <div className="task-body-complete">
           <hr />
+          
           <div className="edit-fields">
-            
+            {/* Statut */}
             <div className="field-group">
               <label>Statut :</label>
               {isEditing ? (
@@ -65,6 +91,7 @@ const TaskItem = ({ task, taskFolders, onUpdateTask }) => {
               )}
             </div>
 
+            {/* Description */}
             <div className="field-group">
               <label>Description :</label>
               {isEditing ? (
@@ -76,34 +103,50 @@ const TaskItem = ({ task, taskFolders, onUpdateTask }) => {
                 <p>{task.description || "Aucune description"}</p>
               )}
             </div>
+
+            {/* Équipiers */}
             <div className="field-group">
               <label>Équipiers :</label>
-              {isEditing ? (
-                <input
-                  type="text"
-                  defaultValue={editedTask.equipiers?.join(', ')}
-                  placeholder="Noms séparés par des virgules"
-                  onChange={(e) => {
-                    const noms = e.target.value.split(',').map(nom => nom.trim()).filter(n => n !== "");
-                    setEditedTask({ ...editedTask, equipiers: noms });
-                  }}
-                />
-              ) : (
-                  <div className="equipiers-list">
-                    {task.equipiers && task.equipiers.length > 0 ? (
-                      task.equipiers.map((equipier, index) => (
-                        <span key={index} className="equipier-badge">
-                          👤 {equipier.name} 
-                        </span>
-                      ))
-                    ) : (
-                      <span className="no-data">Aucun équipier assigné</span>
-                    )}
-                  </div>
-              )}
+              <div className="equipiers-list">
+                {task.equipiers && task.equipiers.length > 0 ? (
+                  task.equipiers.map((equipier, index) => (
+                    <span key={index} className="equipier-badge">
+                      👤 {equipier.name || equipier} 
+                    </span>
+                  ))
+                ) : (
+                  <span className="no-data">Aucun équipier assigné</span>
+                )}
+              </div>
+            </div>
+
+            {/* GESTION DES DOSSIERS (Le sélecteur de liaison) */}
+            <div className="folder-management">
+              <h4>Modifier les dossiers associés :</h4>
+              <div className="folder-selector">
+                {allFolders.map(f => {
+                  const isLinked = relations.some(r => r.tache === task.id && r.dossier === f.id);
+                  return (
+                    <button 
+                      key={f.id}
+                      className={`folder-tag ${isLinked ? 'active' : ''}`}
+                      style={{ 
+                        "--folder-color": f.color,
+                        border: `1.5px solid ${f.color}`, 
+                        color: isLinked ? 'white' : f.color,
+                        backgroundColor: isLinked ? f.color : 'transparent'
+                      }}
+                      onClick={() => onToggleFolder(task.id, f.id)}
+                    >
+                      {f.title}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
+          {/* Boutons d'actions */}
           <div className="task-actions">
             {isEditing ? (
               <>

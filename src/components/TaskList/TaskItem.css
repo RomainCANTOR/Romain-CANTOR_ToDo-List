@@ -1,106 +1,99 @@
-.task-card {
-    background: white;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-    border-left: 5px solid #ccc;
-}
-
-.task-header-row {
+/* Conteneur des titres et badges */
+.task-title-row {
     display: flex;
     align-items: center;
-    gap: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 4px;
 }
 
-.toggle-arrow {
-    cursor: pointer;
-    color: #666;
-    width: 20px;
-}
-
-.task-main-info {
-    flex: 1;
-}
-
-.task-main-info h3 {
+.task-title-row h3 {
     margin: 0;
     font-size: 1.1rem;
+    color: #2b2d42;
 }
 
-.due-date {
-    font-size: 0.8rem;
-    color: #888;
-}
-
-.mini-folders, .full-folders {
+/* Alignement des mini badges */
+.task-mini-folders {
     display: flex;
-    gap: 5px;
-    flex-wrap: wrap;
+    gap: 6px;
 }
 
-.folder-badge {
-    padding: 2px 8px;
-    border-radius: 12px;
+/* Style du badge moderne */
+.mini-folder-badge {
+    /* On utilise la variable CSS définie dans le style inline du JS */
+    background-color: rgba(0, 0, 0, 0.05); /* Fond gris très léger par défaut */
+    color: var(--folder-color);
+    border: 1.5px solid var(--folder-color);
+    padding: 2px 10px;
+    border-radius: 6px;
     font-size: 0.7rem;
-    color: white;
-    font-weight: bold;
+    font-weight: 700;
     text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    transition: all 0.2s ease;
 }
 
-.status-tag {
-    font-size: 0.75rem;
-    padding: 4px 8px;
-    border-radius: 4px;
-    background: #f0f0f0;
+/* Petit effet au survol du badge */
+.mini-folder-badge:hover {
+   background-color: var(--folder-color);
+    
+    /* MODIFIE CETTE LIGNE : Mélange la couleur du dossier avec 80% de noir */
+    color: color-mix(in srgb, var(--folder-color), black 80%) !important;
+    
+    transform: scale(1.05);
 }
 
-/* Couleurs selon l'état */
-.status-tag.Nouveau { background: #e3f2fd; color: #1976d2; }
-.status-tag.En-cours { background: #fff3e0; color: #f57c00; }
-.status-tag.Réussi { background: #e8f5e9; color: #388e3c; }
-
-.task-body-complete {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid #eee;
-}
-
-.editing input, .editing textarea {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    border: 1px solid #007bff;
-    border-radius: 4px;
-}
-
-.task-actions {
-    margin-top: 15px;
-    display: flex;
-    gap: 10px;
-}
-
-.field-group {
-    margin-bottom: 15px;
-}
-
-.field-group label {
-    display: block;
-    font-weight: bold;
+/* Gestion du sélecteur dans le MODE ÉTENDU */
+.folder-management h4 {
     font-size: 0.9rem;
-    color: #555;
-    margin-bottom: 5px;
+    color: #666;
+    margin-bottom: 10px;
 }
 
-select {
-    width: 100%;
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    background: white;
+.folder-tag {
+    background-color: transparent;
+    color: var(--folder-color);
+    border: 2px solid var(--folder-color);
+    transition: all 0.2s;
 }
 
-.btn-save { background: #28a745; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
-.btn-cancel { background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
-.btn-edit { background: #ffc107; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+/* Si le bouton n'est PAS actif, on ne met pas de texte blanc au survol */
+.folder-tag:not(.active):hover {
+    background-color: rgba(0, 0, 0, 0.05); /* Juste un petit gris de survol */
+    color: var(--folder-color);            /* On garde la couleur du texte ! */
+}
+
+/* Si le bouton EST actif, il reste avec son fond coloré et texte blanc */
+.folder-tag.active {
+    background-color: var(--folder-color);
+    color: white !important;
+}
+
+
+.task-card {
+    background-color: #ffffff;
+    /* On ajoute une bordure légère pour bien délimiter la boîte */
+    border: 1px solid #e0e0e0; 
+    border-radius: 10px;
+    
+    /* LE SÉPARATEUR : 20px d'espace sous chaque tâche */
+    margin-bottom: 20px; 
+    
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Optionnel : Un petit effet de relief au survol pour dynamiser */
+.task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-color: #007bff; /* La bordure devient bleue au survol */
+}
+
+/* Pour que la dernière tâche n'ait pas d'espace inutile en bas */
+.task-card:last-child {
+    margin-bottom: 80px; /* On laisse de la place pour le footer flottant */
+}

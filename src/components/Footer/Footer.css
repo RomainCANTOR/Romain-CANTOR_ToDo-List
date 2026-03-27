@@ -1,40 +1,42 @@
 .footer {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #f8f9fa;
-    padding: 15px;
-    border-top: 1px solid #dee2e6;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    z-index: 9999; /* Pour passer devant les cartes */
     display: flex;
     justify-content: center;
-    z-index: 1000;
 }
 
 .add-actions {
     display: flex;
-    gap: 20px;
+    gap: 15px;
 }
 
 .btn-add {
-    padding: 10px 20px;
     border: none;
     border-radius: 25px;
+    padding: 10px 20px;
     font-weight: bold;
     cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.btn-add:hover {
-    transform: scale(1.05);
-}
-
-.btn-add.task {
-    background-color: #007bff;
+    transition: transform 0.2s, box-shadow 0.2s;
     color: white;
+}
+
+/* Retour aux couleurs d'origine */
+.btn-add.task {
+    background-color: #007bff; /* Ton bleu d'origine */
 }
 
 .btn-add.folder {
-    background-color: #6c757d;
-    color: white;
+    background-color: #6c757d; /* Ton gris d'origine */
+}
+
+.btn-add:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
 }

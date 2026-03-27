@@ -3,21 +3,21 @@ import './App.css';
 import dataImporte from './data.json';
 import Header from './components/Header/Header';
 import TaskList from './components/TaskList/TaskList';
+import FolderList from './components/FolderList/FolderList';
 import Filters from './components/Filters/Filters';
 import Footer from './components/Footer/Footer';
 import TaskModal from './components/Modal/TaskModal';
+import FolderModal from './components/Modal/FolderModal';
 import { ETAT_TERMINE } from './constants/enums';
-import FolderModal from './components/Modal/FolderModal'; // Import bien utilisé maintenant
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [folders, setFolders] = useState([]);
   const [relations, setRelations] = useState([]);
   const [isInitialized, setIsInitialized] = useState(false);
-  
-  // États pour les Modals
+  const [view, setView] = useState('TASKS');
   const [showModal, setShowModal] = useState(false);
-  const [isFolderOpen, setIsFolderOpen] = useState(false); // État utilisé en bas
+  const [isFolderOpen, setIsFolderOpen] = useState(false);
   
   const [sortBy, setSortBy] = useState('date_echeance');
   const [filterStatus, setFilterStatus] = useState('EN_COURS');
@@ -37,7 +37,17 @@ function App() {
   const handleSaveFolder = (newFolder) => {
     const folderWithId = { ...newFolder, id: Date.now() };
     setFolders([...folders, folderWithId]);
-    setIsFolderOpen(false); // Ferme la modal après sauvegarde
+    setIsFolderOpen(false);
+  };
+
+  // --- NOUVELLE FONCTION : LIER/DÉLIER DOSSIER ---
+  const onToggleFolder = (taskId, folderId) => {
+    const exists = relations.find(r => r.tache === taskId && r.dossier === folderId);
+    if (exists) {
+      setRelations(relations.filter(r => !(r.tache === taskId && r.dossier === folderId)));
+    } else {
+      setRelations([...relations, { tache: taskId, dossier: folderId }]);
+    }
   };
 
   const updateTask = (updatedTask) => {
@@ -70,42 +80,37 @@ function App() {
     <div className="App">
       <Header tasks={tasks} />
       
+      <div className="view-switcher" style={{ display: 'flex', justifyContent: 'center', gap: '10px', margin: '20px' }}>
+        <button onClick={() => setView('TASKS')} className={view === 'TASKS' ? 'active' : ''}>Vue Tâches</button>
+        <button onClick={() => setView('FOLDERS')} className={view === 'FOLDERS' ? 'active' : ''}>Vue Dossiers</button>
+      </div>
+
       <main className="container">
-        <Filters 
-          currentSort={sortBy} 
-          setSort={setSortBy} 
-          filterStatus={filterStatus}
-          setFilter={setFilterStatus}
-        />
-        
-        <TaskList 
-          tasks={getProcessedTasks()} 
-          folders={folders} 
-          relations={relations} 
-          onUpdateTask={updateTask}
-        />
+        {view === 'TASKS' ? (
+          <>
+            <Filters currentSort={sortBy} setSort={setSortBy} filterStatus={filterStatus} setFilter={setFilterStatus} />
+            <TaskList 
+              tasks={getProcessedTasks()} 
+              folders={folders} 
+              relations={relations} 
+              onUpdateTask={updateTask}
+              onToggleFolder={onToggleFolder} // PASSAGE DE LA FONCTION
+            />
+          </>
+        ) : (
+          <FolderList 
+            folders={folders} 
+            relations={relations} 
+            onDeleteFolder={(id) => setFolders(folders.filter(f => f.id !== id))}
+            onUpdateFolder={(updated) => setFolders(folders.map(f => f.id === updated.id ? updated : f))}
+          />
+        )}
       </main>
 
-      {/* BRANCHEMENT DU FOOTER : On lie les boutons aux états */}
-      <Footer 
-        onOpenTaskModal={() => setShowModal(true)} 
-        onOpenFolderModal={() => setIsFolderOpen(true)} 
-      />
+      <Footer onOpenTaskModal={() => setShowModal(true)} onOpenFolderModal={() => setIsFolderOpen(true)} />
 
-      {/* AFFICHAGE DES MODALS */}
-      {showModal && (
-        <TaskModal 
-          onClose={() => setShowModal(false)} 
-          onSave={handleAddTask}
-        />
-      )}
-
-      {isFolderOpen && (
-        <FolderModal 
-          onClose={() => setIsFolderOpen(false)} 
-          onSave={handleSaveFolder}
-        />
-      )}
+      {showModal && <TaskModal onClose={() => setShowModal(false)} onSave={handleAddTask} />}
+      {isFolderOpen && <FolderModal onClose={() => setIsFolderOpen(false)} onSave={handleSaveFolder} />}
     </div>
   );
 }

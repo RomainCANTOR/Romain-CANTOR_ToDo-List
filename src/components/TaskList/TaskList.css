@@ -1,0 +1,5 @@
+.task-list {
+    padding: 20px 10px;
+    max-width: 800px;
+    margin: 0 auto; /* Centre la liste au milieu de l'écran */
+}

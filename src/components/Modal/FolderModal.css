@@ -26,3 +26,28 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
+/* Le fond noir semi-transparent qui couvre tout l'écran */
+.modal-overlay {
+    position: fixed;     /* INDISPENSABLE : reste fixé à l'écran */
+    top: 0;
+    left: 0;
+    width: 100vw;        /* Prend toute la largeur */
+    height: 100vh;       /* Prend toute la hauteur */
+    
+    display: flex;
+    justify-content: center; /* Centre horizontalement */
+    align-items: center;     /* Centre verticalement */
+    z-index: 10000;          /* Passe au-dessus de TOUT (même du footer) */
+}
+
+/* La boîte blanche du formulaire */
+.modal-content {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    position: relative;      /* Pour que le contenu interne se place bien */
+}
