@@ -29,3 +29,71 @@ body {
     background: #007bff;
     color: white;
 }
+
+.view-switcher {
+    display: inline-flex;
+    background-color: #e9ecef;
+    padding: 5px;
+    border-radius: 12px;
+    margin: 20px auto;
+}
+
+.view-switcher button {
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+    color: #6c757d;
+}
+
+/* Le bouton actif devient blanc avec une ombre */
+.view-switcher button.active {
+    background-color: white;
+    color: #007bff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.view-switcher button:hover:not(.active) {
+    color: #333;
+}
+
+.init-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f4f7f6;
+}
+
+.init-buttons {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.btn-load {
+  padding: 12px 24px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-reset {
+  padding: 12px 24px;
+  background-color: #6c757d; /* Gris pour la prudence */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-reset:hover {
+  background-color: #dc3545; /* Devient rouge au survol : DANGER */
+}

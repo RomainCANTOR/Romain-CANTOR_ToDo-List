@@ -50,3 +50,36 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     position: relative;      /* Pour que le contenu interne se place bien */
 }
+/* Conteneur global du sélecteur */
+.equipiers-selector {
+    display: flex;
+    flex-direction: column; /* Les équipiers l'un sous l'autre */
+    gap: 10px;             /* Espace entre chaque ligne */
+    margin-top: 10px;
+    max-height: 150px;     /* Optionnel : ajoute un scroll si trop d'équipiers */
+    overflow-y: auto;
+    padding: 5px;
+}
+
+/* LA CLASSE MAGIQUE : Aligne la case et le prénom */
+.equipier-option {
+    display: flex;         /* Active le mode rangée */
+    align-items: center;    /* Centre verticalement la case et le texte */
+    gap: 10px;             /* Espace entre la checkbox et le prénom */
+    cursor: pointer;       /* Curseur main pour cliquer plus facilement */
+    font-size: 0.95rem;
+    color: #4a4a4a;
+    transition: color 0.2s ease;
+}
+
+.equipier-option:hover {
+    color: #007bff;        /* Change de couleur au survol */
+}
+
+/* Style de la checkbox elle-même */
+.equipier-option input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin: 0;             /* Supprime les marges par défaut qui décalent */
+}

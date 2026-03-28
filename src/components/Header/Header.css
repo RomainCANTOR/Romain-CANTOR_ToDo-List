@@ -1,0 +1,40 @@
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: white;
+    border-bottom: 1px solid #eee;
+}
+
+.header-stats {
+    display: flex;
+    gap: 15px;
+}
+
+.stat-card {
+    display: flex;
+    flex-direction: column;
+    background: #f8f9fa;
+    padding: 8px 16px;
+    border-radius: 10px;
+    border-left: 4px solid #007bff; /* Couleur par défaut */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.stat-card.total { border-left-color: #007bff; }   /* Bleu pour Total */
+.stat-card.active { border-left-color: #ffc107; }  /* Jaune/Orange pour En cours */
+
+.stat-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #6c757d;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #2b2d42;
+}

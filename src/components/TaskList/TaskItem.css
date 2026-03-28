@@ -97,3 +97,14 @@
 .task-card:last-child {
     margin-bottom: 80px; /* On laisse de la place pour le footer flottant */
 }
+
+.task-card {
+    /* ... vos propriétés existantes ... */
+    border-left: 5px solid transparent; 
+    transition: border-color 0.3s ease;
+}
+
+/* Si vous voulez colorer le bord en fonction du premier dossier associé */
+.task-card:hover {
+    border-left-color: #007bff; 
+}

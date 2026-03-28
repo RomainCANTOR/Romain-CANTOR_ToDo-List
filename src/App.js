@@ -21,6 +21,18 @@ function App() {
   
   const [sortBy, setSortBy] = useState('date_echeance');
   const [filterStatus, setFilterStatus] = useState('EN_COURS');
+  const startFromScratch = () => {
+  const confirmReset = window.confirm(
+      "Etes-vous sûr(e) de vouloir repartir à zéro ?"
+    );
+
+    if (confirmReset) {
+      setTasks([]);
+      setFolders([]);
+      setRelations([]);
+      setIsInitialized(true);
+    }
+  }
 
   const loadBackup = () => {
     setTasks(dataImporte.tasks);
@@ -69,10 +81,18 @@ function App() {
   if (!isInitialized) {
     return (
       <div className="init-screen">
-        <h1>Projet ToDo-List</h1>
-        <button onClick={loadBackup}>Charger le backup (JSON)</button>
-        <button onClick={() => setIsInitialized(true)}>Repartir de zéro</button>
+      <h1>Projet ToDo-List</h1>
+      <div className="init-buttons">
+        <button className="btn-load" onClick={loadBackup}>
+          Charger le backup (JSON)
+        </button>
+        
+        {/* On appelle notre nouvelle fonction de confirmation ici */}
+        <button className="btn-reset" onClick={startFromScratch}>
+          Repartir de zéro
+        </button>
       </div>
+    </div>
     );
   }
 
